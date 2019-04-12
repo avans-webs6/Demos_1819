@@ -1,0 +1,12 @@
+<h2>All heroes</h2>
+
+<ul class="hero-list">
+  <li *ngFor="let hero of heroes" (click)="goTo(hero)">
+
+        <img src="https://battletime.herokuapp.com/images/hero_{{hero.id}}.png">
+      <div class="info">
+        <h2>{{hero.name}}</h2>
+        <span>{{hero.oneLiners[0]}}</span>
+      </div>
+    </li>
+  </ul>

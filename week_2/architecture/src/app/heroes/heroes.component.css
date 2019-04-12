@@ -1,0 +1,34 @@
+
+
+ul{
+    margin:30px;
+    list-style: none;
+    width: 300px;
+}
+
+ul li{
+    cursor: pointer;
+    transition: transform 0.5s;
+    margin-bottom:20px;
+    display: block;
+    background-color:#eee;
+    display: flex;
+}
+
+ul li:hover{
+    transform:scale(1.1);
+}
+
+ul li h2{
+    margin-bottom:2px;
+    margin-top:-0px;
+}
+
+.info{
+    padding: 10px;
+}
+
+ img{
+
+    height: 100px;
+}
