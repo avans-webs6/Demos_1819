@@ -1,6 +1,13 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <h2>Users</h2>
+    <ul>
+      <li v-for="user in users">
+        {{user.name.first}}
+      </li>
+    </ul>
+    <hr>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -34,7 +41,15 @@
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String
+    msg: String,
+    users: []
+  },
+  mounted: function(){
+    fetch('https://randomuser.me/api/?results=20').then((res) => {
+      console.log(res);
+            this.users = res.results;
+
+    })
   }
 }
 </script>

@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'angular';
+  public title = 'angular';
+  public Message = 'hello world';
+
+  constructor(){
+
+  }
 }
