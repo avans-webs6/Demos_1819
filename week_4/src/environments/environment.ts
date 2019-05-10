@@ -6,11 +6,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyBYwHhTt04VeSjHbaM8OYNmZmJ-tCmKMOk",
-    authDomain: "blogmanager-bdfa4.firebaseapp.com",
-    databaseURL: "https://blogmanager-bdfa4.firebaseio.com",
-    projectId: "blogmanager-bdfa4",
-    storageBucket: "blogmanager-bdfa4.appspot.com",
-    messagingSenderId: "340374091991"
+    apiKey: "AIzaSyBx5F_ARNh9T_CdvzJTCQyfdZdZGgUs8Ac",
+    authDomain: "fir-41837.firebaseapp.com",
+    databaseURL: "https://fir-41837.firebaseio.com",
+    projectId: "fir-41837",
+    storageBucket: "fir-41837.appspot.com",
+    messagingSenderId: "1023537959102",
+    appId: "1:1023537959102:web:17ecd23624cb4128"
   }
 };

@@ -1,13 +1,14 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 
+
+
 //Form component
 import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Blog } from '../blog';
 
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/throttleTime';
-import 'rxjs/add/observable/fromEvent';
+import { debounceTime } from 'rxjs/operators';
+import { BlogService } from '../blog.service';
 
 @Component({
   selector: 'app-blog-detail',
@@ -21,9 +22,9 @@ export class BlogDetailComponent implements OnChanges {
 
   public blogForm: FormGroup;
 
-  constructor(private db: AngularFireDatabase, private fb: FormBuilder) { }
+  constructor(private db: BlogService, private fb: FormBuilder) { }
 
-  private blog: AngularFireObject<Blog> = null;
+  private blog: AngularFirestoreDocument<Blog> = null;
 
   ngOnChanges(changes: SimpleChanges): void {
 
@@ -31,20 +32,18 @@ export class BlogDetailComponent implements OnChanges {
     if (!this.key) return;
 
     //Haal 1 specifieke blog op
-    this.blog = this.db.object<Blog>('/blogs/' + this.key);
+    this.blog = this.db.getBlog(this.key);
 
 
     //Als de blog word aangepast, dan moet je het formulier updaten 
     this.blog.valueChanges()
       .subscribe((blog: Blog) => {
         //update formulier
-        debugger;
         this.blogForm = this.fb.group(blog);
         //op het nieuwe formulier ook de automatische updates binden
         this.blogForm.valueChanges
-          .debounceTime(500)
+          .pipe(debounceTime(500))
           .subscribe(() => {
-            debugger;
             this.blog.update(this.blogForm.value);
           })
       })

@@ -41,17 +41,7 @@
 
     <hr>
 
-    <h2>Blogs (normal)</h2>
-
-    <table class="table table-striped">
-        <tr *ngFor="let b of blogs | async">
-            <td>{{b.name}}</td>
-            <td>{{b.date}}</td>
-            <td>{{b.author}}</td>
-        </tr>
-    </table>
-
-    <h2>Blogs (snapshot)</h2>
+    <h2>Blogs</h2>
 
     <table class="table table-striped">
         <tr>
@@ -62,14 +52,14 @@
             <th>Actions</th>
         </tr>
         <!-- Let op de b.payoad.val() methode! -->
-        <tr *ngFor="let b of blogssnap | async">
-            <td>{{b.key}}</td>
-            <td>{{b.payload.val().name}}</td>
-            <td>{{b.payload.val().date}}</td>
-            <td>{{b.payload.val().author}}</td>
+        <tr *ngFor="let b of blogs | async">
+            <td>{{b.id}}</td>
+            <td>{{b.name}}</td>
+            <td>{{b.date}}</td>
+            <td>{{b.author}}</td>
             <td>
-                <button class="btn btn-sm btn-danger" (click)="delete(b.key)">Delete</button>
-                <button class="btn btn-sm btn-priary" (click)="selected = b.key">Details</button>
+                <button class="btn btn-sm btn-danger" (click)="delete(b.id)">Delete</button>
+                <button class="btn btn-sm btn-priary" (click)="selected = b.id">Details</button>
 
             </td>
         </tr>

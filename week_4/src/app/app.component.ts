@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
+
+import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase/app';
+
 import { Blog } from './blog';
-
-import { AngularFireAuth } from 'angularfire2/auth';
-
+import { Observable } from 'rxjs';
+import { BlogService } from './blog.service';
 
 @Component({
   selector: 'app-root',
@@ -19,31 +20,30 @@ export class AppComponent implements OnInit {
 
   public model: Blog;
 
-  constructor(public afAuth: AngularFireAuth, private db: AngularFireDatabase) {}
+  constructor(public afAuth: AngularFireAuth, private db: BlogService) {}
 
   login() {
-    //this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
   logout() {
-    //this.afAuth.auth.signOut();
+    this.afAuth.auth.signOut();
   }
 
   ngOnInit(): void {
 
-    this.blogs = this.db.list<Blog>('/blogs').valueChanges();
-    this.blogssnap = this.db.list<Blog>('/blogs').snapshotChanges();
+    this.blogs = this.db.getBlogs();
     this.model = new Blog();
   }
 
   public onSubmit(blog: Blog)
   {
-    this.db.list('/blogs').push(blog);
+    this.db.addBlog(blog);
     this.model = new Blog();
   }
 
   public delete(key: string)
   {
-    this.db.object('/blogs/' + key).remove();
+    this.db.deleteBlog(key);
   }
 
   

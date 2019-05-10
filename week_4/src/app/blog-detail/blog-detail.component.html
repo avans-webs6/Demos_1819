@@ -1,6 +1,6 @@
   <!-- Blog detail component template -->
   <!-- Alleen details laten zien als de 'sleutel' aanwezig is. -->
-  <div *ngIf="key">
+  <div *ngIf="key && blogForm">
     <h2>Blog Detail</h2>
     <!-- Formgroup attribuut van angular -->
     <form [formGroup]="blogForm"> 
