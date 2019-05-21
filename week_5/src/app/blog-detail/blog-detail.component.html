@@ -1,0 +1,21 @@
+  <!-- Blog detail component template -->
+  <!-- Alleen details laten zien als de 'sleutel' aanwezig is. -->
+  <div *ngIf="key">
+    <h2>Blog Detail</h2>
+    <!-- Formgroup attribuut van angular -->
+    <form [formGroup]="blogForm"> 
+      <div class="form-group">
+        <label class="center-block">Name:
+          <!-- Formcontrolname attribuut van angular-->
+          <input class="form-control" formControlName="name"> 
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="center-block">Author:
+          <!-- Formcontrolname attribuut van angular-->
+          <input class="form-control" formControlName="author"> 
+        </label>
+      </div>
+    </form>
+  </div>
+
