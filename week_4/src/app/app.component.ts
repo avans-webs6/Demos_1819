@@ -21,10 +21,15 @@ export class AppComponent implements OnInit {
   public model: Blog;
   public selected: any;
 
+  private isLoggedIn: boolean;
+
   constructor(public afAuth: AngularFireAuth, private db: BlogService) {}
 
+
   login() {
-    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then(data => this.db.addBlog(null))
+      .catch(data => this.db.deleteBlog(null));
   }
   logout() {
     this.afAuth.auth.signOut();
@@ -34,6 +39,10 @@ export class AppComponent implements OnInit {
 
     this.blogs = this.db.getBlogs();
     this.model = new Blog();
+
+    this.afAuth.user.subscribe(user => {
+      this.isLoggedIn = user != null;
+    })
   }
 
   public onSubmit(blog: Blog)
@@ -44,7 +53,8 @@ export class AppComponent implements OnInit {
 
   public delete(key: string)
   {
-    this.db.deleteBlog(key);
+    if(this.isLoggedIn)
+      this.db.deleteBlog(key);
   }
 
   

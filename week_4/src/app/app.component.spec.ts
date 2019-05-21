@@ -20,15 +20,18 @@ class MockBlogService
   }
 
   addBlog(blog: Blog){};
+
+  deleteBlog(key: String){}
 }
 
 //Mock value
 const mockAngularFireAuth: any = {
   auth: jasmine.createSpyObj('auth', {
-    'signInWithPopup': Promise.reject(),
-    'signOut': Promise.reject()
+    'signInWithPopup': Promise.resolve(),
+    'signOut': Promise.resolve()
   }),
-  authState: of(null)
+  authState: of(null),
+  user: of(null)
 };
 describe('AppComponent', () => {
 
@@ -82,10 +85,44 @@ describe('AppComponent', () => {
 
   }));
 
-  // it('should render title in a h1 tag', async(() => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   fixture.detectChanges();
-  //   const compiled = fixture.debugElement.nativeElement;
-  //   expect(compiled.querySelector('h1').textContent).toContain('Welcome to app!');
-  // }));
+  it(`should not able to delete a blog when not logged in`, async(() => {
+
+    //arrange
+    let addSpy = spyOn(mockBlogServiceObject, 'deleteBlog');
+
+    //act
+    app.delete({});
+
+    //assert
+    expect(addSpy).not.toHaveBeenCalled();
+
+  }));
+
+  
+  it(`should be able to delete a blog when logged in`, async(() => {
+
+    //arrange
+    let addSpy = spyOn(mockBlogServiceObject, 'deleteBlog');
+    mockAngularFireAuth.user = of({name: "Stijn"});
+    
+    //act
+    app.delete({});
+
+    //assert
+    expect(addSpy).toHaveBeenCalled();
+
+  }));
+
+  it(`should  not break login`, async(() => {
+
+    //arrange
+
+    //act
+    app.login();
+
+    //assert
+    //expect(addSpy).toHaveBeenCalled();
+
+  }));
+
 });

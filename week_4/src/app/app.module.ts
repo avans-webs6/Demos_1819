@@ -12,6 +12,7 @@ import { UsersComponent } from './users/users.component';  // <-- #1 import modu
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { SprintListComponent } from './sprint-list/sprint-list.component';
 
 
 
@@ -19,7 +20,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
   declarations: [
     AppComponent,
     BlogDetailComponent,
-    UsersComponent
+    UsersComponent,
+    SprintListComponent
   ],
   imports: [
     BrowserModule,
