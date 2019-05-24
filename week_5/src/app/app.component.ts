@@ -1,51 +1,85 @@
-import { Component, OnInit } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
-import { Blog } from './blog';
-
-import { AngularFireAuth } from 'angularfire2/auth';
-
+import { Component } from '@angular/core';
+import { DragulaService } from 'ng2-dragula';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
+  title = 'app';
+
+  public poules: any[] = [];
+
+  constructor(private dragulaService: DragulaService) {
+
+    //add 3 pules
+    for(var i = 0; i < 3; i++)
+    {
+      this.addPoule("Poule " + (i + 1));
+    }
+
+    dragulaService.drag.subscribe((value) => {
+      //console.log(`drag: ${value[0]}`);
+      this.onDrag(value.slice(1));
+    });
+
+    dragulaService.drop.subscribe((value) => {
+      this.updatePoules();
+    });
+
+
+    dragulaService.over.subscribe((value) => {
+      //console.log(`over: ${value[0]}`);
+      this.onOver(value.slice(1));
+    });
+    
+    dragulaService.out.subscribe((value) => {
+      //console.log(`out: ${value[0]}`);
+      this.onOut(value.slice(1));
+    });
+  }
+
+  private playercounter = 0;
+
+  private updatePoules(){
+    //wow much magic
+    this.poules = [...this.poules];
+  }
+
+  public addPoule(name: string){
+
+    var players = [];
+    //create items
+    for(var i = 0; i < 5; i++)
+    {
+        players.push({name: "Player " + this.playercounter});
+        this.playercounter++;
+    }
+
+    this.poules.push({
+      name: name,
+      players: players
+    });
+  }
+
+  private onDrag(args) {
+    let [e, el] = args;
+    // do something
+  }
   
-  public blogs : Observable<Blog[]>;
-  //Deze is nog niet belangrijk
-  public blogssnap : Observable<any[]>;
-
-  public model: Blog;
-
-  constructor(public afAuth: AngularFireAuth, private db: AngularFireDatabase) {}
-
-  login() {
-    //this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  private onDrop(args) {
+    let [e, el] = args;
+    // do something
   }
-  logout() {
-    this.afAuth.auth.signOut();
-  }
-
-  ngOnInit(): void {
-
-    this.blogs = this.db.list<Blog>('/blogs').valueChanges();
-    this.blogssnap = this.db.list<Blog>('/blogs').snapshotChanges();
-    this.model = new Blog();
-  }
-
-  public onSubmit(blog: Blog)
-  {
-    this.db.list('/blogs').push(blog);
-    this.model = new Blog();
-  }
-
-  public delete(key: string)
-  {
-    this.db.object('/blogs/' + key).remove();
-  }
-
   
-
+  private onOver(args) {
+    let [e, el, container] = args;
+    // do something
+  }
+  
+  private onOut(args) {
+    let [e, el, container] = args;
+    // do something
+  }
 }

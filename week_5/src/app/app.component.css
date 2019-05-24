@@ -1,0 +1,21 @@
+.columns{
+    display: flex;
+}
+
+.columns ul{
+    flex: 1;
+    list-style: none;
+    padding: 0px;
+    border:1px solid #2e2e2e;
+    margin:2px;
+}
+
+.columns li{
+    border:1px solid #eee;
+    margin:2px;
+    cursor: pointer;
+}
+
+li{
+    list-style: none;
+}

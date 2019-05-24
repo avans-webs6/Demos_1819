@@ -1,81 +1,17 @@
-<div class="container">
+<h2>Demo Dragula</h2>
 
-    <h2>Login</h2>
-
-    <div *ngIf="afAuth.authState | async as user; else showLogin">
-        <h1>Hello {{ user.displayName }}!</h1>
-        <button  class="btn btn-lg btn-warning" (click)="logout()">Logout</button>
-    </div>
-    <ng-template #showLogin>
-        <p>Please login.</p>
-        <button class="btn btn-lg btn-primary" (click)="login()">Login with Google</button>
-    </ng-template>
-
-    <hr>
-
-    <h2>Blog Form</h2>
-
-    <!-- Dit formulier gaan we volgende week pimpen! -->
-    <!-- probeer eens een blog toe te voegen als je niet bent ingelogd -->
-    <form (ngSubmit)="onSubmit(model)" #blogForm="ngForm">
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name" #name="ngModel">
-            <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
-                Name is required
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="author">Author</label>
-            <input type="text" class="form-control" id="author" [(ngModel)]="model.author" name="author">
-        </div>
-
-        <div class="form-group">
-            <label for="author">Date</label>
-            <input type="date" class="form-control" id="date" [(ngModel)]="model.date" name="date">
-        </div>
-
-        <button type="submit" class="btn btn-success" [disabled]="!blogForm.form.valid">Submit</button>
-    </form>
-
-    <hr>
-
-    <h2>Blogs (normal)</h2>
-
-    <table class="table table-striped">
-        <tr *ngFor="let b of blogs | async">
-            <td>{{b.name}}</td>
-            <td>{{b.date}}</td>
-            <td>{{b.author}}</td>
-        </tr>
-    </table>
-
-    <h2>Blogs (snapshot)</h2>
-
-    <table class="table table-striped">
-        <tr>
-            <th>Key</th>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Author</th>
-            <th>Actions</th>
-        </tr>
-        <!-- Let op de b.payoad.val() methode! -->
-        <tr *ngFor="let b of blogssnap | async">
-            <td>{{b.key}}</td>
-            <td>{{b.payload.val().name}}</td>
-            <td>{{b.payload.val().date}}</td>
-            <td>{{b.payload.val().author}}</td>
-            <td>
-                <button class="btn btn-sm btn-danger" (click)="delete(b.key)">Delete</button>
-                <button class="btn btn-sm btn-priary" (click)="selected = b.key">Details</button>
-
-            </td>
-        </tr>
-    </table>
-
-    <app-blog-detail [key]="selected"></app-blog-detail>
-
-
+<div class="columns">
+  <div *ngFor="let poule of poules" >
+    <h3>{{poule.name}}</h3>
+    <ul [dragula] [dragulaModel]='poule.players'>
+      <li *ngFor="let player of poule.players">{{player.name}}</li>
+    </ul>
+  </div>
 </div>
+
+<hr>
+
+<h2>Demo D3JS</h2>
+
+<app-bars [bars]="poules | bars"></app-bars>
+

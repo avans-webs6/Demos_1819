@@ -1,0 +1,18 @@
+.bar {
+    fill: steelblue;
+    pointer-events: all;
+  }
+  
+  .bar:hover {
+    fill: brown;
+  }
+  
+  .axis--x path {
+    display: none;
+  }
+
+
+  /* svg,  svg * {
+    pointer-events: all;
+  } */
+
